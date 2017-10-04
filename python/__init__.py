@@ -31,4 +31,4 @@ except ImportError:
 	pass
 
 # import any pure python here
-# from gen_watterson_taps import gaussian_tap
+from gen_watterson_taps import gaussian_tap
