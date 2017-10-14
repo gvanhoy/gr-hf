@@ -10,22 +10,24 @@ class WattersonEqualization:
 
     def simulation(self):
         tap_block = watterson_tap()
-        tap_block.run()
+        print "run tap block"
+        tap_block.start()
         tap1 = tap_block.get_tap()
         tap_block.stop()
 
-        tap_block = watterson_tap() # different parameters
-        tap_block.run()
+        print "run tap block"
+        tap_block = watterson_tap()  # different parameters
+        tap_block.start()
         tap2 = tap_block.get_tap()
         tap_block.stop()
 
-        top_block = cma_watterson_experiment(10, 1024, (tap1, tap2))
-        top_block.run()
+        top_block = cma_watterson_experiment(10, 4096, (tap1, tap2))
+        top_block.start()
         top_block.wait()
         symbols = top_block.blocks_vector_sink_x_0.data()
         top_block.stop()
 
-        plt.plot(np.real(symbols), np.imag(symbols))
+        plt.scatter(np.real(symbols)[3000:-1], np.imag(symbols)[3000:-1])
         plt.show()
 
         ## calculate the error rate
