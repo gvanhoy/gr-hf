@@ -31,7 +31,9 @@ endif()
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    gen_watterson_taps.py DESTINATION ${GR_PYTHON_DIR}/hf
+    gen_watterson_taps.py
+    cma_watterson_experiment.py
+    watterson_tap.py DESTINATION ${GR_PYTHON_DIR}/hf
 )
 
 ########################################################################

@@ -113,7 +113,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(336, 20)</value>
+      <value>(280, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -152,7 +152,34 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(216, 20)</value>
+      <value>(344, 444)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>poll_rate</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(184, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -164,7 +191,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>32000</value>
+      <value>1000000</value>
     </param>
   </block>
   <block>
@@ -207,7 +234,7 @@
     </param>
     <param>
       <key>poll_rate</key>
-      <value>10</value>
+      <value>poll_rate</value>
     </param>
   </block>
   <block>
@@ -250,7 +277,7 @@
     </param>
     <param>
       <key>poll_rate</key>
-      <value>10</value>
+      <value>poll_rate</value>
     </param>
   </block>
   <block>
@@ -442,7 +469,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(784, 264)</value>
+      <value>(736, 264)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -614,7 +641,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(600, 260)</value>
+      <value>(568, 260)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -929,7 +956,7 @@
     </param>
     <param>
       <key>taps</key>
-      <value>gen_watterson_taps.gen_taps(10, 10, 10)</value>
+      <value>gen_taps(.001, 2, 100)</value>
     </param>
     <param>
       <key>type</key>
@@ -1039,7 +1066,7 @@
     </param>
     <param>
       <key>taps</key>
-      <value>[0.673825,0.684442,0.695007,0.705512,0.71595,0.726312,0.736592,0.746782,0.756873,0.766859,0.77673,0.786481,0.796103,0.805587,0.814928,0.824116,0.833144,0.842006,0.850693,0.859199,0.867515,0.875636,0.883553,0.89126,0.898751,0.906018,0.913056,0.919858,0.926418,0.93273,0.938788,0.944588,0.950123,0.955389,0.96038,0.965093,0.969523,0.973666,0.977517,0.981074,0.984333,0.98729,0.989944,0.992292,0.994331,0.99606,0.997477,0.99858,0.999369,0.999842,1.0,0.999842,0.999369,0.99858,0.997477,0.99606,0.994331,0.992292,0.989944,0.98729,0.984333,0.981074,0.977517,0.973666,0.969523,0.965093,0.96038,0.955389,0.950123,0.944588,0.938788,0.93273,0.926418,0.919858,0.913056,0.906018,0.898751,0.89126,0.883553,0.875636,0.867515,0.859199,0.850693,0.842006,0.833144,0.824116,0.814928,0.805587,0.796103,0.786481,0.77673,0.766859,0.756873,0.746782,0.736592,0.726312,0.71595,0.705512,0.695007,0.684442]</value>
+      <value>gen_taps(.001, 2, 100)</value>
     </param>
     <param>
       <key>type</key>
@@ -1409,7 +1436,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(504, 20)</value>
+      <value>(448, 20)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1421,7 +1448,7 @@
     </param>
     <param>
       <key>import</key>
-      <value>from hf import gen_watterson_taps</value>
+      <value>from hf.gen_watterson_taps import gen_taps </value>
     </param>
   </block>
   <connection>
