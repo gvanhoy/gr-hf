@@ -30,7 +30,8 @@ import numpy
 class cma_watterson_experiment(gr.top_block):
     def __init__(self,
                  snr_db=10,
-                 num_symbols=1024):
+                 num_symbols=1024,
+                 taps=[]):
         gr.top_block.__init__(self, "CMA Watterson Experiment")
 
         ##################################################
@@ -39,6 +40,7 @@ class cma_watterson_experiment(gr.top_block):
         self.snr_db = snr_db
         self.samp_rate = samp_rate = 1000000
         self.num_symbols = num_symbols
+        self.taps = taps
 
         self.const = const = digital.constellation_8psk().base()
 
@@ -54,7 +56,7 @@ class cma_watterson_experiment(gr.top_block):
         	noise_voltage=10**(-snr_db/20)/numpy.sqrt(2),
         	frequency_offset=0.0,
         	epsilon=1.0,
-        	taps=(1, ),
+        	taps=self.taps,
         	noise_seed=0,
         	block_tags=False
         )
