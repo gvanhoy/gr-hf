@@ -22,7 +22,7 @@ import numpy as np
 
 
 def gen_taps(delay_spread, doppler_spread, num_taps):
-    if mod(num_taps, 2) != 0:
+    if num_taps % 2 != 0:
         print "Warning, number of taps is not even."
 
     taps = np.ndarray((num_taps,), dtype=np.float32)
