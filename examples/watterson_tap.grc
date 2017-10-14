@@ -38,7 +38,7 @@
     </param>
     <param>
       <key>generate_options</key>
-      <value>no_gui</value>
+      <value>qt_gui</value>
     </param>
     <param>
       <key>hier_block_src_path</key>
@@ -209,7 +209,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(752, 20)</value>
+      <value>(744, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -221,7 +221,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>gen_taps(doppler_spread_hz, delay_spread_s, num_taps)</value>
+      <value>np.asarray(gen_taps(doppler_spread_hz, delay_spread_s, num_taps))</value>
     </param>
   </block>
   <block>
@@ -299,7 +299,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(584, 120)</value>
+      <value>(600, 120)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -334,7 +334,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(392, 116)</value>
+      <value>(408, 116)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -417,11 +417,42 @@
     </param>
     <param>
       <key>taps</key>
-      <value>taps</value>
+      <value>[0, 1]</value>
     </param>
     <param>
       <key>type</key>
-      <value>ccc</value>
+      <value>ccf</value>
+    </param>
+  </block>
+  <block>
+    <key>import</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(920, 12)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>numpy</value>
+    </param>
+    <param>
+      <key>import</key>
+      <value>import numpy as np</value>
     </param>
   </block>
   <block>

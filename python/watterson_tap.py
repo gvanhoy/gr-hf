@@ -44,7 +44,7 @@ class watterson_tap(gr.top_block):
         ##################################################
         # Blocks
         ##################################################
-        self.interp_fir_filter_xxx_0 = filter.interp_fir_filter_ccc(1, (taps))
+        self.interp_fir_filter_xxx_0 = filter.interp_fir_filter_ccc(1, taps)
         self.interp_fir_filter_xxx_0.declare_sample_delay(0)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.block_0 = blocks.probe_signal_c()

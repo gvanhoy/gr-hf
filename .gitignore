@@ -1,1 +1,3 @@
 .idea/
+examples/__init__.py
+examples/*.py
