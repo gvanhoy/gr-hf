@@ -22,6 +22,7 @@ from gnuradio import analog
 from gnuradio import blocks
 from gnuradio import filter
 from gnuradio import gr
+import numpy as np
 from hf.gen_watterson_taps import gen_taps
 
 
