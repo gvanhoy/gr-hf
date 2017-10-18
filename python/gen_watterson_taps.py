@@ -22,11 +22,17 @@ import numpy as np
 
 
 def gen_taps(delay_spread, doppler_spread, num_taps):
-    if num_taps % 2 != 0:
-        print "Warning, number of taps is not even."
+    if num_taps % 2 == 0:
+        print "Warning, number of taps is not odd."
 
     taps = []
-    for tap_index in range(-num_taps/2, num_taps/2, 1):
+    for tap_index in range(-num_taps/2, num_taps/2 + 1, 1):
         arg = np.pi * doppler_spread * tap_index*2*delay_spread
         taps.append(np.exp(-arg*arg))
-    return taps
+
+    energy = taps[len(taps)/2]
+    for x in range(len(taps)):
+        if x != len(taps)/2:
+            energy += 2*taps[x]
+
+    return map(lambda x: x/energy, taps)
