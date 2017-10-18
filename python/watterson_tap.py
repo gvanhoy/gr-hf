@@ -48,7 +48,7 @@ class watterson_tap(gr.top_block):
         self.interp_fir_filter_xxx_0.declare_sample_delay(0)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.block_0 = blocks.probe_signal_c()
-        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 1, 0)
+        self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 1, np.random.randint(0, 10000))
 
 
         ##################################################

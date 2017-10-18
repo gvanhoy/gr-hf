@@ -13,6 +13,8 @@ class WattersonEqualization:
         print "run tap block"
         tap_block.start()
         tap = tap_block.get_tap()
+        while np.abs(tap) < 0.001:
+            tap = tap_block.get_tap()
         tap_block.stop()
         return tap
 
@@ -31,9 +33,10 @@ class WattersonEqualization:
     def simulation(self):
         tap1 = self.create_tap()
         tap2 = self.create_tap()
+        print str(abs(tap1)), str(abs(tap2))
 
 
-        top_block = cma_watterson_experiment(10, 4096, (tap1, tap2))
+        top_block = cma_watterson_experiment(50, 4096, (tap1, tap2))
         top_block.start()
         top_block.wait()
         self.symbols = top_block.blocks_vector_sink_x_0.data()
