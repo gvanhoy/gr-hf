@@ -53,7 +53,7 @@ class cma_watterson_experiment(gr.top_block):
         self.digital_cma_equalizer_cc_0 = digital.cma_equalizer_cc(20, 1, 1, 2)
         self.digital_chunks_to_symbols_xx_1 = digital.chunks_to_symbols_bc((const.points()), 1)
         self.channels_channel_model_0 = channels.channel_model(
-        	noise_voltage=10**(-snr_db/20)/numpy.sqrt(2),
+        	noise_voltage=0,
         	frequency_offset=0.0,
         	epsilon=1.0,
         	taps=self.taps,
@@ -80,7 +80,7 @@ class cma_watterson_experiment(gr.top_block):
 
     def set_snr_db(self, snr_db):
         self.snr_db = snr_db
-        self.channels_channel_model_0.set_noise_voltage(10**(-self.snr_db/20)/numpy.sqrt(2))
+        self.channels_channel_model_0.set_noise_voltage(10**(-self.snr_db/20.0)/numpy.sqrt(2))
 
     def get_samp_rate(self):
         return self.samp_rate

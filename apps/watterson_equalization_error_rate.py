@@ -25,15 +25,54 @@ class WattersonEqualization:
         for symbol in self.symbols:
             point = symbol - np.asarray(self.const_points)
             min_dist = np.min(point)
-            error.append(min_dist)
-            # if min_dist > epsilon:
-            #     error_count = error_count + 1
-        np.mean(np.square(min_dist))
+            #error.append(min_dist)
+            error.append(np.square(min_dist))
+        #a = np.square(min_dist)
+        #np.mean(np.square(min_dist))
+        mse = np.abs(np.mean(error))
+        return mse
+
 
     def simulation(self):
         tap1 = self.create_tap()
         tap2 = self.create_tap()
-        print str(abs(tap1)), str(abs(tap2))
+        snr_db_list = [1,2,3,4,5]
+        mse_list = []
+        for x in snr_db_list:
+            snr_db = 100
+            scale_factor = 1.0 / np.sqrt((tap1 * np.conj(tap1)) + (tap2 * np.conj(tap2)))
+            tap1 = scale_factor * tap1 * .5
+            tap2 = scale_factor * tap2 * .5
+
+            top_block = cma_watterson_experiment(snr_db, 2**16, (1, 0))
+            top_block.start()
+            top_block.wait()
+            self.symbols = top_block.blocks_vector_sink_x_0.data()
+            top_block.stop()
+
+            plt.figure(1)
+            plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])
+
+            plt.figure(2)
+            plt.scatter(np.real(self.symbols)[2**15:-1], np.imag(self.symbols)[2**15:-1])
+            plt.show()
+
+            ## calculate the error rate
+            self.const_points = top_block.const.points()
+
+            mse = self.error_check()
+            mse_list.append(mse)
+
+        snr_plot = [10,20,30,40,50]
+        plt.plot(snr_plot, mse_list)
+        plt.xlabel('SNR (dB)')
+        plt.ylabel('MSE')
+        plt.title(' Mean Squared Error of CMA Equalizer')
+        plt.show()
+        '''    
+        scale_factor = 1.0/np.sqrt((tap1*np.conj(tap1))+(tap2*np.conj(tap2)))
+        tap1 = scale_factor * tap1 * .5
+        tap2 = scale_factor * tap2 * .5
 
 
         top_block = cma_watterson_experiment(50, 4096, (tap1, tap2))
@@ -42,12 +81,17 @@ class WattersonEqualization:
         self.symbols = top_block.blocks_vector_sink_x_0.data()
         top_block.stop()
 
+        plt.figure(1)
+        plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])
+
+        plt.figure(2)
         plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
         plt.show()
 
         ## calculate the error rate
         self.const_points = top_block.const.points()
         self.error_check()
+        '''
 
 
 
