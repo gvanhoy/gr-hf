@@ -44,7 +44,7 @@ class WattersonEqualization:
             tap1 = scale_factor * tap1 * .5
             tap2 = scale_factor * tap2 * .5
 
-            top_block = cma_watterson_experiment(snr_db, 2**16, (tap1, tap2))
+            top_block = cma_watterson_experiment(snr_db, 2**16, (tap1,tap2))
             top_block.start()
             top_block.wait()
             self.symbols = top_block.blocks_vector_sink_x_0.data()
