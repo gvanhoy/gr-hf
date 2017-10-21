@@ -39,21 +39,21 @@ class WattersonEqualization:
         snr_db_list = [1,2,3,4,5]
         mse_list = []
         for x in snr_db_list:
-            snr_db = 100
+            snr_db = 10*x
             scale_factor = 1.0 / np.sqrt((tap1 * np.conj(tap1)) + (tap2 * np.conj(tap2)))
             tap1 = scale_factor * tap1 * .5
             tap2 = scale_factor * tap2 * .5
 
-            top_block = cma_watterson_experiment(snr_db, 2**16, (1, 0))
+            top_block = cma_watterson_experiment(snr_db, 2**16, (tap1, tap2))
             top_block.start()
             top_block.wait()
             self.symbols = top_block.blocks_vector_sink_x_0.data()
             top_block.stop()
 
-            plt.figure(1)
-            plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])
+            #plt.figure(1)
+            #plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])
 
-            plt.figure(2)
+            plt.figure(1)
             plt.scatter(np.real(self.symbols)[2**15:-1], np.imag(self.symbols)[2**15:-1])
             plt.show()
 
