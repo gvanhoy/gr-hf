@@ -44,7 +44,7 @@ class WattersonEqualization:
             tap1 = scale_factor * tap1 * .5
             tap2 = scale_factor * tap2 * .5
 
-            top_block = cma_watterson_experiment(snr_db, 2**16, (tap1,tap2))
+            top_block = cma_watterson_experiment(snr_db, 4096, (tap1,tap2))
             top_block.start()
             top_block.wait()
             self.symbols = top_block.blocks_vector_sink_x_0.data()
@@ -54,7 +54,7 @@ class WattersonEqualization:
             #plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])
 
             plt.figure(1)
-            plt.scatter(np.real(self.symbols)[2**15:-1], np.imag(self.symbols)[2**15:-1])
+            plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
             plt.show()
 
             ## calculate the error rate
@@ -63,10 +63,11 @@ class WattersonEqualization:
             mse = self.error_check()
             mse_list.append(mse)
 
+        mse_list = 10*np.log10(mse_list)
         snr_plot = [10,20,30,40,50]
         plt.plot(snr_plot, mse_list)
         plt.xlabel('SNR (dB)')
-        plt.ylabel('MSE')
+        plt.ylabel('MSE (dB)')
         plt.title(' Mean Squared Error of CMA Equalizer')
         plt.show()
         '''    
