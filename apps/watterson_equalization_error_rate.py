@@ -55,6 +55,10 @@ class WattersonEqualization:
 
             plt.figure(1)
             plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+
+            plt.title('Constellation Prior to Equalization - ' + str(snr_db) + ' dB')
+            plt.xlabel('In-Phase')
+            plt.ylabel('Quadrature')
             plt.show()
 
             ## calculate the error rate
