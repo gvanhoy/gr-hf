@@ -1,5 +1,6 @@
 from hf.cma_watterson_experiment import cma_watterson_experiment
 from hf.watterson_tap import watterson_tap
+#from python import lms_watterson_experiment
 from matplotlib import pyplot as plt
 import numpy as np
 
@@ -49,6 +50,9 @@ class WattersonEqualization:
             top_block.wait()
             self.symbols = top_block.blocks_vector_sink_x_0.data()
             top_block.stop()
+            #lms_block = lms_watterson_experiment(snr_db,(tap1,tap2))
+            #lms_block.start()
+            #self.symbols_lms =
 
             #plt.figure(1)
             #plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])

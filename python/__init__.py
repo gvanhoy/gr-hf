@@ -34,3 +34,4 @@ except ImportError:
 from gen_watterson_taps import gen_taps
 from cma_watterson_experiment import cma_watterson_experiment
 from watterson_tap import watterson_tap
+from lms_watterson_experiment import lms_watterson_experiment
