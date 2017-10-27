@@ -4,14 +4,15 @@ from hf.watterson_tap import watterson_tap
 from matplotlib import pyplot as plt
 import numpy as np
 
+SNR_RANGE = range(30, 100, 10)
+
 
 class WattersonEqualization:
     def __init__(self):
         self.simulation()
 
     def create_tap(self):
-        tap_block = watterson_tap()
-        print "run tap block"
+        tap_block = watterson_tap(num_taps=101)
         tap_block.start()
         tap = tap_block.get_tap()
         while np.abs(tap) < 0.001:
@@ -33,28 +34,24 @@ class WattersonEqualization:
         mse = np.abs(np.mean(error))
         return mse
 
-
     def simulation(self):
-
-        snr_db_list = [1,1.5,2,2.5,3,3.5,4,4.5,5]
         mse_avg_list = []
-        num_trials = 500000
-        for x in snr_db_list:
-
-            snr_db = 10*x
+        num_trials = 100
+        for snr in SNR_RANGE:
             mse_avg = 0
             for i in range(num_trials):
                 tap1 = self.create_tap()
                 tap2 = self.create_tap()
                 scale_factor = 1.0 / np.sqrt((tap1 * np.conj(tap1)) + (tap2 * np.conj(tap2)))
-                tap1 = scale_factor * tap1 * .5
-                tap2 = scale_factor * tap2 * .5
+                tap1 = scale_factor * tap1
+                tap2 = scale_factor * tap2
 
-                top_block = cma_watterson_experiment(snr_db, 4096, (tap1,tap2))
+                top_block = cma_watterson_experiment(snr, 4096, (tap1, tap2))
                 top_block.start()
                 top_block.wait()
                 self.symbols = top_block.blocks_vector_sink_x_0.data()
                 top_block.stop()
+                top_block.wait()
                 #lms_block = lms_watterson_experiment(snr_db,(tap1,tap2))
                 #lms_block.start()
                 #self.symbols_lms =
@@ -62,8 +59,9 @@ class WattersonEqualization:
                 #plt.figure(1)
                 #plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])
 
-                #plt.figure(1)
-                #plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+                plt.figure(1)
+                plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+                plt.show()
 
                 #plt.title('Constellation Prior to Equalization - ' + str(snr_db) + ' dB')
                 #plt.xlabel('In-Phase')
@@ -81,9 +79,7 @@ class WattersonEqualization:
 
 
         mse_avg_list = 10*np.log10(mse_avg_list)
-        #snr_plot = [10,20,30,40,50]
-        snr_plot = [10,15,20,25,30,35,40,45,50]
-        plt.plot(snr_plot, mse_avg_list)
+        plt.plot(SNR_RANGE, mse_avg_list)
         plt.xlabel('SNR (dB)')
         plt.ylabel('MSE (dB)')
         plt.title(' Mean Squared Error of CMA Equalizer')
