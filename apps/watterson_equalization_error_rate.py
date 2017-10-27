@@ -4,7 +4,7 @@ from hf.watterson_tap import watterson_tap
 from matplotlib import pyplot as plt
 import numpy as np
 
-SNR_RANGE = range(30, 100, 10)
+SNR_RANGE = range(10, 100, 10)
 
 
 class WattersonEqualization:
@@ -36,7 +36,7 @@ class WattersonEqualization:
 
     def simulation(self):
         mse_avg_list = []
-        num_trials = 100
+        num_trials = 1000
         for snr in SNR_RANGE:
             mse_avg = 0
             for i in range(num_trials):
@@ -59,9 +59,9 @@ class WattersonEqualization:
                 #plt.figure(1)
                 #plt.scatter(np.real(self.symbols)[0:100], np.imag(self.symbols)[0:100])
 
-                plt.figure(1)
-                plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
-                plt.show()
+                #plt.figure(1)
+                #plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+                #plt.show()
 
                 #plt.title('Constellation Prior to Equalization - ' + str(snr_db) + ' dB')
                 #plt.xlabel('In-Phase')
@@ -73,9 +73,9 @@ class WattersonEqualization:
 
                 mse = self.error_check()
                 mse_avg = mse_avg + mse/num_trials
-                print str(i)
+                #print str(i)
             mse_avg_list.append(mse_avg)
-            print i
+            print mse_avg
 
 
         mse_avg_list = 10*np.log10(mse_avg_list)
