@@ -1,5 +1,6 @@
 from hf.cma_watterson_experiment import cma_watterson_experiment
 from hf.watterson_tap import watterson_tap
+from hf.lms_watterson_experiment import lms_watterson_experiment
 #from python import lms_watterson_experiment
 from matplotlib import pyplot as plt
 import numpy as np
@@ -26,9 +27,10 @@ class WattersonEqualization:
         error = []
         for symbol in self.symbols:
             point = symbol - np.asarray(self.const_points)
+            point = np.abs(point)
             min_dist = np.min(point)
-            #error.append(min_dist)
-            error.append(np.square(min_dist))
+            error.append(min_dist)
+            #error.append(np.square(min_dist))
         #a = np.square(min_dist)
         #np.mean(np.square(min_dist))
         mse = np.abs(np.mean(error))
@@ -36,9 +38,11 @@ class WattersonEqualization:
 
     def simulation(self):
         mse_avg_list = []
-        num_trials = 1000
+        mse_avg_list_lms = []
+        num_trials = 2000
         for snr in SNR_RANGE:
             mse_avg = 0
+            mse_avg_lms = 0
             for i in range(num_trials):
                 tap1 = self.create_tap()
                 tap2 = self.create_tap()
@@ -52,7 +56,9 @@ class WattersonEqualization:
                 self.symbols = top_block.blocks_vector_sink_x_0.data()
                 top_block.stop()
                 top_block.wait()
-                #lms_block = lms_watterson_experiment(snr_db,(tap1,tap2))
+
+
+
                 #lms_block.start()
                 #self.symbols_lms =
 
@@ -73,17 +79,47 @@ class WattersonEqualization:
 
                 mse = self.error_check()
                 mse_avg = mse_avg + mse/num_trials
-                #print str(i)
+
+                lms_block = lms_watterson_experiment(snr, (tap1, tap2))
+                lms_block.start()
+                lms_block.wait()
+                self.symbols = lms_block.blocks_vector_sink_x_0.data()
+                lms_block.stop()
+                lms_block.wait()
+
+                plt.figure(1)
+                plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+                plt.show()
+
+                mse_lms = self.error_check()
+                mse_avg_lms = mse_avg_lms + mse_lms/num_trials
+
+
             mse_avg_list.append(mse_avg)
+            mse_avg_list_lms.append(mse_avg_lms)
             print mse_avg
 
 
         mse_avg_list = 10*np.log10(mse_avg_list)
+        mse_avg_list_lms = 10*np.log10(mse_avg_list_lms)
+        plt.figure(1)
         plt.plot(SNR_RANGE, mse_avg_list)
         plt.xlabel('SNR (dB)')
         plt.ylabel('MSE (dB)')
         plt.title(' Mean Squared Error of CMA Equalizer')
         plt.show()
+        plt.figure(2)
+        plt.plot(SNR_RANGE, mse_avg_list_lms)
+        plt.xlabel('SNR (dB)')
+        plt.ylabel('MSE (dB)')
+        plt.title(' Mean Squared Error of LMS Equalizer')
+        plt.show()
+
+
+
+
+
+
         '''    
         scale_factor = 1.0/np.sqrt((tap1*np.conj(tap1))+(tap2*np.conj(tap2)))
         tap1 = scale_factor * tap1 * .5

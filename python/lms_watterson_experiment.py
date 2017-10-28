@@ -53,10 +53,10 @@ class lms_watterson_experiment(gr.top_block):
         ##################################################
         self.interp_fir_filter_xxx_0_0 = filter.interp_fir_filter_ccc(2, (firdes.low_pass_2(1, 1, .25, .1, 80)))
         self.interp_fir_filter_xxx_0_0.declare_sample_delay(0)
-        self.digital_lms_dd_equalizer_cc_0 = digital.lms_dd_equalizer_cc(2, 1, 2, const)
+        self.digital_lms_dd_equalizer_cc_0 = digital.lms_dd_equalizer_cc(4, .01, 2, const)
         self.digital_chunks_to_symbols_xx_1 = digital.chunks_to_symbols_bc((const.points()), 1)
         self.channels_channel_model_0 = channels.channel_model(
-        	noise_voltage=0,
+        	noise_voltage=10**(-self.snr_db/20.0)/numpy.sqrt(2),
         	frequency_offset=0.0,
         	epsilon=1.0,
         	taps=self.taps,
