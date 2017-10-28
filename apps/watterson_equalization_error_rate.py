@@ -47,6 +47,7 @@ class WattersonEqualization:
             mse_avg = 0
             mse_avg_lms = 0
             for i in range(num_trials):
+
                 tap1 = self.create_tap()
                 tap2 = self.create_tap()
                 scale_factor = 1.0 / np.sqrt((tap1 * np.conj(tap1)) + (tap2 * np.conj(tap2)))

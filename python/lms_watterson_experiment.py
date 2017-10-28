@@ -105,6 +105,8 @@ class lms_watterson_experiment(gr.top_block):
         self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 1, 42)
         self.block_1 = blocks.probe_signal_c()
         self.block_0 = blocks.probe_signal_c()
+        self.blocks_throttle_0_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
+        self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
 
         ##################################################
         # Connections
@@ -122,8 +124,6 @@ class lms_watterson_experiment(gr.top_block):
         self.connect((self.analog_noise_source_x_0_0, 0), (self.interp_fir_filter_xxx_0_1, 0))
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.interp_fir_filter_xxx_0_1, 0), (self.blocks_throttle_0_0, 0))
-        self.blocks_throttle_0_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
-        self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
         self.connect((self.blocks_throttle_0, 0), (self.block_0, 0))
         self.connect((self.blocks_throttle_0_0, 0), (self.block_1, 0))
 
