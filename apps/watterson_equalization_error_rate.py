@@ -5,15 +5,16 @@ from hf.lms_watterson_experiment import lms_watterson_experiment
 from matplotlib import pyplot as plt
 import numpy as np
 
-SNR_RANGE = range(10, 60, 10)
-
+#SNR_RANGE = range(10, 60, 10)
+SAMPLES = range(50, 310, 10)
 
 class WattersonEqualization:
     def __init__(self):
         self.simulation()
 
     def create_tap(self):
-        tap_block = watterson_tap(delay_spread_s=.001, doppler_spread_hz=0.5, num_taps=101)
+        #tap_block = watterson_tap(delay_spread_s=.001, doppler_spread_hz=0.5, num_taps=101)
+        tap_block = watterson_tap(delay_spread_s=.002, doppler_spread_hz=1, num_taps=101)
         tap_block.start()
         tap = tap_block.get_tap()
         while np.abs(tap) < 0.001:
@@ -40,7 +41,9 @@ class WattersonEqualization:
         mse_avg_list = []
         mse_avg_list_lms = []
         num_trials = 5000
-        for snr in SNR_RANGE:
+        snr = 20
+        #for snr in SNR_RANGE:
+        for samp in SAMPLES:
             mse_avg = 0
             mse_avg_lms = 0
             for i in range(num_trials):
@@ -50,7 +53,8 @@ class WattersonEqualization:
                 tap1 = scale_factor * tap1
                 tap2 = scale_factor * tap2
 
-                top_block = cma_watterson_experiment(snr, 4096, (tap1, tap2))
+                #top_block = cma_watterson_experiment(snr, 4096, (tap1, tap2))
+                top_block = cma_watterson_experiment(snr, samp, (tap1, tap2))
                 top_block.start()
                 top_block.wait()
                 self.symbols = top_block.blocks_vector_sink_x_0.data()
@@ -80,7 +84,8 @@ class WattersonEqualization:
                 mse = self.error_check()
                 mse_avg = mse_avg + mse/num_trials
 
-                lms_block = lms_watterson_experiment(snr, (tap1, tap2))
+                #lms_block = lms_watterson_experiment(snr, 4096, (tap1, tap2))
+                lms_block = lms_watterson_experiment(snr, samp, (tap1, tap2))
                 lms_block.start()
                 lms_block.wait()
                 self.symbols = lms_block.blocks_vector_sink_x_0.data()
@@ -88,7 +93,7 @@ class WattersonEqualization:
                 lms_block.wait()
 
                 #plt.figure(1)
-                #plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+                #plt.scatter(np.real(self.symbols)[450:-1], np.imag(self.symbols)[450:-1])
                 #plt.show()
 
                 mse_lms = self.error_check()
@@ -104,16 +109,20 @@ class WattersonEqualization:
         mse_avg_list = 10*np.log10(mse_avg_list)
         mse_avg_list_lms = 10*np.log10(mse_avg_list_lms)
         plt.figure(1)
-        plt.plot(SNR_RANGE, mse_avg_list)
-        plt.xlabel('SNR (dB)')
+        #plt.plot(SNR_RANGE, mse_avg_list)
+        plt.plot(SAMPLES, mse_avg_list)
+        #plt.xlabel('SNR (dB)')
+        plt.xlabel('Number of Samples')
         plt.ylabel('MSE (dB)')
-        plt.title(' Mean Squared Error of CMA Equalizer: Moderate Channel')
+        plt.title(' Mean Squared Error of CMA Equalizer: Poor Channel')
         plt.show()
         plt.figure(2)
-        plt.plot(SNR_RANGE, mse_avg_list_lms)
-        plt.xlabel('SNR (dB)')
+        #plt.plot(SNR_RANGE, mse_avg_list_lms)
+        plt.plot(SAMPLES, mse_avg_list_lms)
+        #plt.xlabel('SNR (dB)')
+        plt.xlabel('Number of Samples')
         plt.ylabel('MSE (dB)')
-        plt.title(' Mean Squared Error of LMS Equalizer: Moderate Channel')
+        plt.title(' Mean Squared Error of LMS Equalizer: Poor Channel')
         plt.show()
 
 
