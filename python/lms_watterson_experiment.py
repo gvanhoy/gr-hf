@@ -55,6 +55,9 @@ class lms_watterson_experiment(gr.top_block):
         ##################################################
         # Blocks
         ##################################################
+        self.block_1 = blocks.probe_signal_c()
+        self.block_0 = blocks.probe_signal_c()
+        
         def _tap_1_probe():
             while True:
                 val = self.block_1.level()
@@ -103,8 +106,7 @@ class lms_watterson_experiment(gr.top_block):
         self.blocks_repeat_0 = blocks.repeat(gr.sizeof_gr_complex * 1, 2)
         self.analog_noise_source_x_0_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 1, 133701)
         self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, 1, 42)
-        self.block_1 = blocks.probe_signal_c()
-        self.block_0 = blocks.probe_signal_c()
+
         self.blocks_throttle_0_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
 
