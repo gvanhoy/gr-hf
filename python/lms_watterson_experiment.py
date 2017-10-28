@@ -34,7 +34,7 @@ import numpy
 
 class lms_watterson_experiment(gr.top_block):
 
-    def __init__(self, snr_db=10, taps=[]):
+    def __init__(self, snr_db=10, num_symbols = 4096, taps=[]):
         gr.top_block.__init__(self, "LMS Watterson Experiment")
 
         ##################################################
@@ -42,7 +42,7 @@ class lms_watterson_experiment(gr.top_block):
         ##################################################
         self.snr_db = snr_db
         self.samp_rate = samp_rate = 1000000
-        self.num_symbols = num_symbols = 4096
+        self.num_symbols = num_symbols
         self.taps = taps
 
         self.const = const = digital.constellation_8psk().base()

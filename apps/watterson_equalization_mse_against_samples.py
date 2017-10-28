@@ -5,8 +5,8 @@ from hf.lms_watterson_experiment import lms_watterson_experiment
 from matplotlib import pyplot as plt
 import numpy as np
 
-SNR_RANGE = range(10, 60, 10)
-
+#SNR_RANGE = range(10, 60, 10)
+SAMPLES = range(50, 310, 10)
 
 class WattersonEqualization:
     def __init__(self):
@@ -40,7 +40,8 @@ class WattersonEqualization:
         mse_avg_list = []
         mse_avg_list_lms = []
         num_trials = 5000
-        for snr in SNR_RANGE:
+        snr = 10
+        for samp in SAMPLES:
             mse_avg = 0
             mse_avg_lms = 0
             for i in range(num_trials):
@@ -50,7 +51,7 @@ class WattersonEqualization:
                 tap1 = scale_factor * tap1
                 tap2 = scale_factor * tap2
 
-                top_block = cma_watterson_experiment(snr, 4096, (tap1, tap2))
+                top_block = cma_watterson_experiment(snr, samp, (tap1, tap2))
                 top_block.start()
                 top_block.wait()
                 self.symbols = top_block.blocks_vector_sink_x_0.data()
