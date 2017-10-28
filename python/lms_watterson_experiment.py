@@ -57,10 +57,11 @@ class lms_watterson_experiment(gr.top_block):
         ##################################################
         self.block_1 = blocks.probe_signal_c()
         self.block_0 = blocks.probe_signal_c()
-        
+
         def _tap_1_probe():
             while True:
                 val = self.block_1.level()
+                gr.top_block.stop()
                 try:
                     self.set_tap_1(val)
                 except AttributeError:
@@ -74,6 +75,7 @@ class lms_watterson_experiment(gr.top_block):
         def _tap_0_probe():
             while True:
                 val = self.block_0.level()
+                gr.top_block.stop()
                 try:
                     self.set_tap_0(val)
                 except AttributeError:
