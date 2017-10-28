@@ -93,9 +93,9 @@ class WattersonEqualization:
                 lms_block.stop()
                 lms_block.wait()
 
-                #plt.figure(1)
-                #plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
-                #plt.show()
+                plt.figure(1)
+                plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+                plt.show()
                 print str(i)
 
                 mse_lms = self.error_check()
