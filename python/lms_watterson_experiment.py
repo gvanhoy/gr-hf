@@ -66,6 +66,7 @@ class lms_watterson_experiment(gr.top_block):
         self.blocks_vector_sink_x_0 = blocks.vector_sink_c(1)
         self.blocks_head_0 = blocks.head(gr.sizeof_gr_complex*1, num_symbols)
         self.analog_random_source_x_1 = blocks.vector_source_b(map(int, numpy.random.randint(0, const.arity(), 1000)), True)
+        self.blocks_repeat_0 = blocks.repeat(gr.sizeof_gr_complex * 1, 2)
 
         ##################################################
         # Connections
@@ -73,10 +74,11 @@ class lms_watterson_experiment(gr.top_block):
         self.connect((self.analog_random_source_x_1, 0), (self.digital_chunks_to_symbols_xx_1, 0))
         self.connect((self.blocks_head_0, 0), (self.blocks_vector_sink_x_0, 0))
         self.connect((self.channels_channel_model_0, 0), (self.digital_lms_dd_equalizer_cc_0, 0))
-        self.connect((self.digital_chunks_to_symbols_xx_1, 0), (self.interp_fir_filter_xxx_0_0, 0))
+        #self.connect((self.digital_chunks_to_symbols_xx_1, 0), (self.interp_fir_filter_xxx_0_0, 0))
         self.connect((self.digital_lms_dd_equalizer_cc_0, 0), (self.blocks_head_0, 0))
-        self.connect((self.interp_fir_filter_xxx_0_0, 0), (self.channels_channel_model_0, 0))
-
+        #self.connect((self.interp_fir_filter_xxx_0_0, 0), (self.channels_channel_model_0, 0))
+        self.connect((self.blocks_repeat_0, 0), (self.channels_channel_model_0, 0))
+        self.connect((self.digital_chunks_to_symbols_xx_1, 0), (self.blocks_repeat_0, 0))
     def get_snr_db(self):
         return self.snr_db
 
