@@ -109,6 +109,8 @@ class lms_watterson_experiment(gr.top_block):
 
         self.blocks_throttle_0_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex * 1, samp_rate, True)
+        self.blocks_head_0_0 = blocks.head(gr.sizeof_gr_complex*1, self.num_symbols)
+        self.blocks_head_0 = blocks.head(gr.sizeof_gr_complex*1, self.num_symbols)
 
         ##################################################
         # Connections
@@ -122,8 +124,12 @@ class lms_watterson_experiment(gr.top_block):
         self.connect((self.blocks_repeat_0, 0), (self.channels_channel_model_0, 0))
         self.connect((self.digital_chunks_to_symbols_xx_1, 0), (self.blocks_repeat_0, 0))
 
-        self.connect((self.analog_noise_source_x_0, 0), (self.interp_fir_filter_xxx_0, 0))
-        self.connect((self.analog_noise_source_x_0_0, 0), (self.interp_fir_filter_xxx_0_1, 0))
+        #self.connect((self.analog_noise_source_x_0, 0), (self.interp_fir_filter_xxx_0, 0))
+        #self.connect((self.analog_noise_source_x_0_0, 0), (self.interp_fir_filter_xxx_0_1, 0))
+        self.connect((self.analog_noise_source_x_0, 0), (self.blocks_head_0, 0))
+        self.connect((self.analog_noise_source_x_0_0, 0), (self.blocks_head_0_0, 0))
+        self.connect((self.blocks_head_0, 0), (self.interp_fir_filter_xxx_0, 0))
+        self.connect((self.blocks_head_0_0, 0), (self.interp_fir_filter_xxx_0_1, 0))
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.interp_fir_filter_xxx_0_1, 0), (self.blocks_throttle_0_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.block_0, 0))
