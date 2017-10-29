@@ -162,20 +162,12 @@ class lms_watterson_experiment(gr.top_block):
     def set_const(self, const):
         self.const = const
 
-    def set_tap_1(self, tap_1):
-        self.tap_1 = tap_1
-        self.channels_channel_model_0.set_taps((self.tap_0 / numpy.sqrt(
-            (numpy.abs(self.tap_0) ** 2 + numpy.abs(self.tap_1) ** 2)), self.tap_1 / numpy.sqrt(
-            (numpy.abs(self.tap_0) ** 2 + numpy.abs(self.tap_1) ** 2))))
+
 
     def get_tap_0(self):
         return self.tap_0
 
-    def set_tap_0(self, tap_0):
-        self.tap_0 = tap_0
-        self.channels_channel_model_0.set_taps((self.tap_0 / numpy.sqrt(
-            (numpy.abs(self.tap_0) ** 2 + numpy.abs(self.tap_1) ** 2)), self.tap_1 / numpy.sqrt(
-            (numpy.abs(self.tap_0) ** 2 + numpy.abs(self.tap_1) ** 2))))
+   
 
 def main(top_block_cls=lms_watterson_experiment, options=None):
 
