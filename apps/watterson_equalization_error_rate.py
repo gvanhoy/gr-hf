@@ -5,8 +5,8 @@ from hf.lms_watterson_experiment import lms_watterson_experiment
 from matplotlib import pyplot as plt
 import numpy as np
 
-SNR_RANGE = range(10, 60, 10)
-SAMPLES = range(50, 310, 10)
+SNR_RANGE = range(10, 60, 5)
+#SAMPLES = range(50, 310, 10)
 
 class WattersonEqualization:
     def __init__(self):
@@ -93,36 +93,36 @@ class WattersonEqualization:
                 lms_block.stop()
                 lms_block.wait()
 
-                plt.figure(1)
-                plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
-                plt.show()
+                #plt.figure(1)
+                #plt.scatter(np.real(self.symbols)[3000:-1], np.imag(self.symbols)[3000:-1])
+                #plt.show()
                 print str(i)
 
                 mse_lms = self.error_check()
                 mse_avg_lms = mse_avg_lms + mse_lms/num_trials
 
 
-            #mse_avg_list.append(mse_avg)
+            mse_avg_list.append(mse_avg)
             mse_avg_list_lms.append(mse_avg_lms)
             #print mse_avg
             print mse_avg_lms
 
 
-        #mse_avg_list = 10*np.log10(mse_avg_list)
+        mse_avg_list = 10*np.log10(mse_avg_list)
         mse_avg_list_lms = 10*np.log10(mse_avg_list_lms)
-        #plt.figure(1)
-        #plt.plot(SNR_RANGE, mse_avg_list)
+        plt.figure(1)
+        plt.plot(SNR_RANGE, mse_avg_list)
         #plt.plot(SAMPLES, mse_avg_list)
-        #plt.xlabel('SNR (dB)')
+        plt.xlabel('SNR (dB)')
         #plt.xlabel('Number of Samples')
-        #plt.ylabel('MSE (dB)')
-        #plt.title(' Mean Squared Error of CMA Equalizer: Poor Channel')
-        #plt.show()
+        plt.ylabel('MSE (dB)')
+        plt.title(' Mean Squared Error of CMA Equalizer: Poor Channel')
+        plt.show()
         plt.figure(2)
         plt.plot(SNR_RANGE, mse_avg_list_lms)
         #plt.plot(SAMPLES, mse_avg_list_lms)
-        #plt.xlabel('SNR (dB)')
-        plt.xlabel('Number of Samples')
+        plt.xlabel('SNR (dB)')
+        #plt.xlabel('Number of Samples')
         plt.ylabel('MSE (dB)')
         plt.title(' Mean Squared Error of LMS Equalizer: Poor Channel')
         plt.show()
