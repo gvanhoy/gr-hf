@@ -1,7 +1,8 @@
 from hf.cma_watterson_experiment import cma_watterson_experiment
 from hf.watterson_tap import watterson_tap
 from hf.lms_watterson_experiment import lms_watterson_experiment
-
+from hf.cma_nonlinear_experiment import cma_nonlinear_experiment
+from hf.lms_nonlinear_experiment import lms_nonlinear_experiment
 #from python import lms_watterson_experiment
 from matplotlib import pyplot as plt
 import numpy as np

@@ -63,6 +63,7 @@ class cma_nonlinear_experiment(gr.top_block):
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.analog_const_source_x_0 = analog.sig_source_c(0, analog.GR_CONST_WAVE, 0, 0, .1)
+        self.analog_noise_source_x_1 = analog.noise_source_c(analog.GR_GAUSSIAN, 10 ** (-20 / 20) / numpy.sqrt(2), 50)
 
         ##################################################
         # Connections
