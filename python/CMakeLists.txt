@@ -34,7 +34,9 @@ GR_PYTHON_INSTALL(
     gen_watterson_taps.py
     cma_watterson_experiment.py
     watterson_tap.py
-    lms_watterson_experiment.py DESTINATION ${GR_PYTHON_DIR}/hf
+    lms_watterson_experiment.py
+    cma_nonlinear_experiment.py
+    lms_nonlinear_experiment.py DESTINATION ${GR_PYTHON_DIR}/hf
 )
 
 ########################################################################
