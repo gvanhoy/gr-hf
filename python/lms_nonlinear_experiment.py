@@ -28,7 +28,7 @@ from gnuradio.filter import firdes
 import numpy
 
 
-class lms_watterson_experiment(gr.top_block):
+class lms_nonlinear_experiment(gr.top_block):
     def __init__(self,
                  snr_db=10,
                  num_symbols=1024,
