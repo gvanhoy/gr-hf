@@ -33,7 +33,7 @@ class cma_nonlinear_experiment(gr.top_block):
                  snr_db=10,
                  num_symbols=1024,
                  taps=[]):
-        gr.top_block.__init__(self, "CMA Watterson Experiment")
+        gr.top_block.__init__(self, "CMA Nonlinear Experiment")
 
         ##################################################
         # Variables

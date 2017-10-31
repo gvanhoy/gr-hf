@@ -1,6 +1,7 @@
 from hf.cma_watterson_experiment import cma_watterson_experiment
 from hf.watterson_tap import watterson_tap
 from hf.lms_watterson_experiment import lms_watterson_experiment
+
 #from python import lms_watterson_experiment
 from matplotlib import pyplot as plt
 import numpy as np
@@ -54,7 +55,7 @@ class WattersonEqualization:
                 tap1 = scale_factor * tap1
                 tap2 = scale_factor * tap2
 
-                top_block = cma_watterson_experiment(snr, 4096, (tap1, tap2))
+                top_block = cma_nonlinear_experiment(snr, 4096, (tap1, tap2))
                 #top_block = cma_watterson_experiment(snr, 4096, (tap1, tap2))
                 #top_block = cma_watterson_experiment(snr, samp, (tap1, tap2))
                 top_block.start()
@@ -86,7 +87,7 @@ class WattersonEqualization:
                 mse = self.error_check()
                 mse_avg = mse_avg + mse/num_trials
 
-                lms_block = lms_watterson_experiment(snr, 4096, (tap1, tap2))
+                lms_block = lms_nonlinear_experiment(snr, 4096, (tap1, tap2))
                 #lms_block = lms_watterson_experiment(snr, samp, (tap1, tap2))
                 lms_block.start()
                 lms_block.wait()
