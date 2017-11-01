@@ -57,9 +57,10 @@ class lms_nonlinear_experiment(gr.top_block):
         self.blocks_head_0 = blocks.head(gr.sizeof_gr_complex*1, num_symbols)
         self.analog_random_source_x_1 = blocks.vector_source_b(map(int, numpy.random.randint(0, const.arity(), 1000)), True)
         self.blocks_repeat_0 = blocks.repeat(gr.sizeof_gr_complex * 1, 2)
-        self.interp_fir_filter_xxx_1 = filter.interp_fir_filter_ccc(1, (
-        self.taps[0]/ numpy.sqrt((numpy.abs(self.taps[0]) ** 2 + numpy.abs(self.taps[1]) ** 2)),
-        self.taps[1]/ numpy.sqrt((numpy.abs(self.taps[0]) ** 2 + numpy.abs(self.taps[1]) ** 2))))
+        #self.interp_fir_filter_xxx_1 = filter.interp_fir_filter_ccc(1, (
+        #self.taps[0]/ numpy.sqrt((numpy.abs(self.taps[0]) ** 2 + numpy.abs(self.taps[1]) ** 2)),
+        #self.taps[1]/ numpy.sqrt((numpy.abs(self.taps[0]) ** 2 + numpy.abs(self.taps[1]) ** 2))))
+        self.interp_fir_filter_xxx_1 = filter.interp_fir_filter_ccc(1, self.taps)
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.analog_const_source_x_0 = analog.sig_source_c(0, analog.GR_CONST_WAVE, 0, 0, .1)
